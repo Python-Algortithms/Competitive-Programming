@@ -2,7 +2,22 @@ import sys
 sys.stdin = open("D:\Kaldesh\input.txt",'r')
 sys.stdout = open("D:\Kaldesh\output.txt",'w')
 
-# Backtracking
+##### Some Algorithms Implemented using Recursion ######
+
+# Binary Search
+def BS (a , l , r , tg):
+    if l >= r:return 0
+    m = (l+r)//2
+    if a[m] < tg:
+        l = m+1
+    elif a[m] > tg:
+        r = m-1
+    else:
+        return 1
+
+    return BS (a , l , r , tg)
+
+######## Backtracking #######
 
 # def func_name (para = initial):
 #    if (stop condition):
@@ -42,9 +57,12 @@ def all_possible_solution(idx , a , n):
         a[idx] = i
         all_possible_solution(idx+1 , a , n)
 
-a = [0 for i in range(5)]
-n = len(a)
-v = [0 for i in range(n+1)]
+def subset(a,n,idx = 0):
+    if idx == n:
+        return
 
-all_permutations(0 , a , v , n)
-all_possible_solution(0 , a , n)
+    a.append(idx)
+    subset(idx+1)
+    a.pop()
+    subset(idx+1) 
+
