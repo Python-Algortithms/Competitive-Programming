@@ -2,21 +2,6 @@ import sys
 sys.stdin = open("D:\Kaldesh\input.txt",'r')
 sys.stdout = open("D:\Kaldesh\output.txt",'w')
 
-##### Some Algorithms Implemented using Recursion ######
-
-# Binary Search
-def BS (a , l , r , tg):
-    if l >= r:return 0
-    m = (l+r)//2
-    if a[m] < tg:
-        l = m+1
-    elif a[m] > tg:
-        r = m-1
-    else:
-        return 1
-
-    return BS (a , l , r , tg)
-
 ######## Backtracking #######
 
 # def func_name (para = initial):
@@ -45,6 +30,22 @@ def all_permutations(idx , a ,v, n):
             all_permutations(idx+1 , a ,v, n)
             v[i] = 0
 
+# Generate all combinations choose m elements from n
+cnt = 0
+def combinations(a,n,m,idx=0,path = []):
+    if idx == n:
+        global cnt
+        if cnt == m:
+            print(path)
+        return
+
+    cnt +=1
+    path.append(a[idx])
+    combinations(a,n,m,idx+1)
+    path.pop()
+    cnt-=1
+    combinations(a,n,m,idx+1)
+
 # Generate all Possible Solutions
 def all_possible_solution(idx , a , n):
     if idx == n:
@@ -57,12 +58,13 @@ def all_possible_solution(idx , a , n):
         a[idx] = i
         all_possible_solution(idx+1 , a , n)
 
+# Generate all subsequences
 def subset(a,n,idx = 0):
     if idx == n:
         return
 
-    a.append(idx)
-    subset(idx+1)
-    a.pop()
-    subset(idx+1) 
+    a.append(idx) # DO
+    subset(idx+1) # call
+    a.pop() #UNDO
+    subset(idx+1) # call 
 
