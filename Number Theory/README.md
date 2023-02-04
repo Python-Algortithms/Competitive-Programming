@@ -1,5 +1,5 @@
 # Number theory
 
 ## Problems
-- [Last digit of power(2,n)](https://codeforces.com/problemset/problem/230/B)
-- [Number of trailing zeros in factorial of n](https://codeforces.com/problemset/problem/762/A)
+- [T-primes](https://codeforces.com/problemset/problem/230/B)
+- [k-th divisor](https://codeforces.com/problemset/problem/762/A)
