@@ -78,7 +78,7 @@ def co_primes(x,y) -> bool:
 def factorial(n):
     f = [1 for i in range(n+1)]
     for i in range(1,n+1):
-        f[i] = ((i*f[i-1])%MOD)%MOD
+        f[i] = (i*f[i-1])%MOD
     return f
 
 # fastPower
@@ -175,6 +175,7 @@ def pascal_triangle(n):
 
 
 ## Fermat little theory: 
+# P must be prime number
 # (a^p) % p = a  
 # (a^p)     = a   (mod p)
 # (a^(p-1)) = 1   (mod p)
