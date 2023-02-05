@@ -1,4 +1,5 @@
 from math import gcd , lcm , sqrt , floor , ceil
+MOD = int(1e9)+7
 
 # find last digit from -> (n^m)
 def last_digit(n,m) -> int: # O(1)
@@ -39,10 +40,12 @@ def sieve(N) -> list:
     #O(sqrt(N)*log(log(n))) ~= O(N)
     a , p = [1 for i in range(N+1)] , []
     a[0] = a[1] = 0 
-    for i in range(2,int(N**(1/2))+1): 
+    i = 2
+    while i*i<=N:
         if a[i]:
             for j in range(i*i,N+1,i):
                 a[j] = 0
+        i+=1
     for i in range(2,len(a)):
         if a[i]:p.append(i)
     return p
@@ -72,12 +75,42 @@ def co_primes(x,y) -> bool:
     return gcd(x,y) == 1
 
 # factorial
-def factorial(n , mod):
+def factorial(n):
     f = [1 for i in range(n+1)]
     for i in range(1,n+1):
-        f[i] = ((i%mod)*(f[i-1]%mod))%mod
+        f[i] = ((i*f[i-1])%MOD)%MOD
     return f
 
+# fastPower
+def fast_power(base , pow , MOD , res = 1):
+    while pow:
+        if pow&1:res = (res*base)%MOD
+        base = (base*base)%MOD
+        pow//=2
+    return res
+
+# instead of dividing by n -> multiplying by mul_inverse(n) 
+def mul_inverse(n,mod):
+    return fast_power(n,mod-2,mod)
+
+# nCr
+def nCr (n,r):
+    f = factorial(n)
+    return (f[n]*mul_inverse((f[r]*f[n-r])%MOD,MOD))%MOD
+
+# nPr
+def nPr (n,r):
+    f = factorial(n)
+    return (f[n]*mul_inverse(f[n-r],MOD))%MOD
+
+# Build Pascal Triangle
+def pascal_triangle(n):
+    pascal = [[1]for i in range(n+1)]
+    for i in range(1,n+1):
+        pascal[i] = [1 for x in range(i+1)]
+        for j in range(1,i):
+            pascal[i][j] = pascal[i-1][j-1]+pascal[i-1][j]
+    return pascal
 
 # find last digit from (n^m)
 # you notice that the this problem can be solved using remainder
@@ -114,4 +147,44 @@ def factorial(n , mod):
 # LCM (x,y) = (x*y) / GCD(x,y)
 # Fact:LCM of co-primes(x,y) = x*y
 
+## MOD
+# (a+b)%m = ((a%m)+(b%m))%m 
+# (a-b)%m = ((a%m)-(b%m)+m)%m 
+# (a*b)%m = ((a%m)*(b%m))%m
+# (a/b)%m = (a*mulinverse(b))%m
 
+
+##fast Power
+# 2^8  = 256
+# 4^4  = 256
+# 16^2 = 256
+# 256^1 = 256
+
+# ret=1
+# 2^10    ret = 1
+# 4^5     ret = 4
+# 16^2
+# 256^1  ret = 4 * 256
+
+# ret=1
+# 2^15  ret = 2
+# 4^7   ret = 4 * 2 = 8
+# 16^3  ret = 16 * 8 = 128
+# 256^1 ret = 256 * 128 = 32768
+
+
+
+## Fermat little theory: 
+# (a^p) % p = a  
+# (a^p)     = a   (mod p)
+# (a^(p-1)) = 1   (mod p)
+# (a^(p-2)) = 1/a (mod p)
+# mulinv(a,p) = a ^ (p-2)
+
+# ncr(n,r) = n! / (r! * (n-r)!)
+# ncr(n,r) = n! * mulinv( (r! * (n-r)!))
+# npr(n,r) = n! / (n-r)!
+# npr(n,r) = n! * mulinv( (n-r)!)
+# ncr(n,i) = ncr(n, n-i)
+# ncr(n,0) + ncr(n,1) + ncr(n,2) + ....... + ncr(n,n) = 2^n
+# npr(n,r) = ncr(n,r) * r! 
