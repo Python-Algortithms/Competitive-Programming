@@ -20,3 +20,4 @@
 ## Sheets
 - [Sheet1](https://codeforces.com/group/1a1GoxmQfi/contest/387932)
 - [Sheet2](https://codeforces.com/group/1a1GoxmQfi/contest/389013)
+- [Sheet3](https://codeforces.com/group/isP4JMZTix/contest/397371)
